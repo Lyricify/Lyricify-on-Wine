@@ -64,3 +64,8 @@ done
 
 check_and_install_package "deepin-app-store-runtime" "deepin-app-store-runtime_1.0.2+community_amd64.deb"
 check_and_install_package "deepin-wine-helper" "deepin-wine-helper_5.3.14-1_amd64.deb"
+
+echo "INFO: All dependencies installed successfully"
+
+echo "WARN/ auto-install script isn't complete. Please manually install the release package from https://github.com/Lyricify/Lyricify-on-Wine/releases"
+exit 1
