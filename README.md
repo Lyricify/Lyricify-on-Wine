@@ -1,7 +1,7 @@
 # Lyricify on Wine
 This is a repository for Lyricify releases that can run on Wine.  
 
-[简体中文](README_zh-CN.md)
+[简体中文](README.zh-CN.md)
 
 ## Table of Contents
 - [Lyricify on Wine](#lyricify-on-wine)
