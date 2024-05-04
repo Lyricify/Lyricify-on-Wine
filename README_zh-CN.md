@@ -8,19 +8,19 @@
   - [目录](#目录)
   - [发布渠道](#发布渠道)
   - [安装](#安装)
-    - [通过 Spark Store](#通过-spark-store)
+    - [通过 星火应用商店](#通过-星火应用商店)
     - [通过 Github Releases](#通过-github-releases)
   - [维护者](#维护者)
 
 ## 发布渠道
-- Spark Store（[安装指南](#通过-github-releases)）
+- 星火应用商店（[安装指南](#通过-星火应用商店)）
 - Github Releases（[安装指南](#通过-github-releases)）
 - APT 仓库（即将推出）
 - Docker 镜像（即将推出）
 
 ## 安装
 
-### 通过 Spark Store
+### 通过 星火应用商店
 这种安装方式更加简单。由于这是一个中国服务，可能并非适合所有人（海外可能无法访问）。
 1. 从 [官方网站](https://spark-app.store/download) 下载 Spark Store。
     - *本来这里要提醒你网站会是中文，但是既然你看了中文版的 README，我就给删了（笑）。*
