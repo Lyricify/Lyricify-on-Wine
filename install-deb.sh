@@ -1,10 +1,25 @@
 #!/bin/bash
 
+# Check if script is run as root
+if [ "$EUID" -ne 0 ]; then
+    echo "ERROR: Please run as root"
+    exit 1
+fi
+
 function download_file_from_repo() {
     local path_in_repo=$1
     local target_path=$2
+
+    if [ -f $target_path ]; then
+        echo "INFO: $target_path already exists, removing it"
+        rm $target_path
+    fi
+
     echo "INFO: downloading $path_in_repo to $target_path"
-    curl -L -o $target_path https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/$path_in_repo
+    if ! curl -L -o $target_path https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/$path_in_repo; then
+        echo "ERROR: Failed to download $path_in_repo"
+        exit 1
+    fi
 }
 
 function safe_dpkg_install() {
@@ -19,73 +34,33 @@ function safe_dpkg_install() {
     fi
 }
 
-set -e
+function check_and_install_package() {
+    local package_name=$1
+    local package_name_in_repo=$2
 
-# is script being run as root?
-if [ "$EUID" -ne 0 ]; then
-    echo "ERROR: This script must be run as root"
-    exit 1
-fi
-
-# Check if dpkg and apt-get present
-if ! command -v dpkg &>/dev/null; then
-    echo "ERROR: dpkg is not present, please install it first"
-    exit 1
-fi
-
-APTGET_INSTALLED=$(command -v apt-get)
-if [ -z "$APTGET_INSTALLED" ]; then
-    echo "INFO: apt-get is not present"
-else
-    echo "INFO: apt-get is present"
-fi
-
-# check if deepin-app-store-runtime and deepin-wine-helper is installed
-# dpkg
-if dpkg -s deepin-app-store-runtime &>/dev/null; then
-    echo "INFO: deepin-app-store-runtime is already installed"
-else
-    echo "INFO: attempting to install deepin-app-store-runtime"
-    if [ -z "$APTGET_INSTALLED" ]; then
-        echo "INFO: since apt isn't present, installing deepin-app-store-runtime from Lyricify-on-Wine repo"
-        download_file_from_repo "apt-missing-dependencies/deepin-app-store-runtime_1.0.2+community_amd64.deb" "/tmp/deepin-app-store-runtime_1.0.2+community_amd64.deb"
-
-        safe_dpkg_install "/tmp/deepin-app-store-runtime_1.0.2+community_amd64.deb"
+    if dpkg-query -W -f='${Status}' $package_name 2>/dev/null | grep -q "install ok installed"; then
+        echo "INFO: $package_name is already installed"
     else
-        echo "INFO: installing deepin-app-store-runtime using apt-get"
-        apt-get install -y deepin-app-store-runtime
+        echo "INFO: attempting to install $package_name"
+        apt-get install -y $package_name
         if [ $? -ne 0 ]; then
-            echo "ERROR: failed to install deepin-app-store-runtime using apt-get. Falling back to dpkg"
-
-            download_file_from_repo "apt-missing-dependencies/deepin-app-store-runtime_1.0.2+community_amd64.deb" "/tmp/deepin-app-store-runtime_1.0.2+community_amd64.deb"
-
-            safe_dpkg_install "/tmp/deepin-app-store-runtime_1.0.2+community_amd64.deb"
+            echo "ERROR: failed to install $package_name using apt-get. Falling back to dpkg"
+            download_file_from_repo "apt-missing-dependencies/${package_name_in_repo}" "/tmp/${package_name_in_repo}"
+            safe_dpkg_install "/tmp/${package_name_in_repo}"
+            rm "/tmp/${package_name_in_repo}"
         else
-            echo "INFO: deepin-app-store-runtime installed successfully, using apt-get"
+            echo "INFO: $package_name installed successfully, using apt-get"
         fi
     fi
-fi
+}
 
-if dpkg -s deepin-wine-helper &>/dev/null; then
-    echo "INFO: deepin-wine-helper is already installed"
-else
-    echo "INFO: attempting to install deepin-wine-helper"
-    if [ -z "$APTGET_INSTALLED" ]; then
-        echo "INFO: since apt isn't present, installing deepin-wine-helper from Lyricify-on-Wine repo"
-        download_file_from_repo "apt-missing-dependencies/deepin-wine-helper_5.3.14-1_amd64.deb" "/tmp/deepin-wine-helper_5.3.14-1_amd64.deb"
-
-        safe_dpkg_install "/tmp/deepin-wine-helper_5.3.14-1_amd64.deb"
-    else
-        echo "INFO: installing deepin-wine-helper using apt-get"
-        apt-get install -y deepin-wine-helper
-        if [ $? -ne 0 ]; then
-            echo "ERROR: failed to install deepin-wine-helper using apt-get. Falling back to dpkg"
-
-            download_file_from_repo "apt-missing-dependencies/deepin-wine-helper_5.3.14-1_amd64.deb" "/tmp/deepin-wine-helper_5.3.14-1_amd64.deb"
-
-            safe_dpkg_install "/tmp/deepin-wine-helper_5.3.14-1_amd64.deb"
-        else
-            echo "INFO: deepin-wine-helper installed successfully, using apt-get"
-        fi
+# Check if dpkg, apt-get and curl are present
+for cmd in dpkg apt-get curl; do
+    if ! command -v $cmd &>/dev/null; then
+        echo "ERROR: $cmd is not present, please install it first"
+        exit 1
     fi
-fi
+done
+
+check_and_install_package "deepin-app-store-runtime" "deepin-app-store-runtime_1.0.2+community_amd64.deb"
+check_and_install_package "deepin-wine-helper" "deepin-wine-helper_5.3.14-1_amd64.deb"
