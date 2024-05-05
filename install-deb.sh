@@ -189,12 +189,14 @@ else
     else
         # create the shortcut
         # target: /opt/apps/com.wxriw.lyricify4/files/run.sh
-        cat >/usr/bin/lyricify <<EOF
+        cat >/usr/bin/lyricify-launcher <<EOF
 #!/bin/bash
 /opt/apps/com.wxriw.lyricify4/files/run.sh
 EOF
         chmod +x /usr/bin/lyricify
         echo "INFO: Shortcut installed successfully"
+        echo "INFO: To launch Lyricify, run lyricify-launcher"
     fi
 
 fi
+echo "INFO: Done"
