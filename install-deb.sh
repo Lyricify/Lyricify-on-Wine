@@ -89,6 +89,13 @@ function download_file_from_url() {
     fi
 }
 
+# check if raw.githubusercontent.com is accessible
+RAW_GITHUB_AVAILABLE=true
+if ! curl -s https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/install-deb.sh | grep -q "raw.githubusercontent.com"; then
+    echo "WARN: raw.githubusercontent.com is not accessible. Using JSDelivr instead"
+    RAW_GITHUB_AVAILABLE=false
+fi
+
 function download_file_from_repo() {
     local path_in_repo=$1
     local target_path=$2
@@ -99,7 +106,12 @@ function download_file_from_repo() {
     fi
 
     echo "INFO: downloading $path_in_repo to $target_path"
-    download_file_from_repo "${path_in_repo}" "/tmp/${path_in_repo}"
+    if [ "$RAW_GITHUB_AVAILABLE" = "true" ]; then
+        url=https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/$path_in_repo
+    else
+        url=https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/$path_in_repo
+    fi
+    download_file_from_repo $url "/tmp/${path_in_repo}"
     if [ $? -ne 0 ]; then
         echo "ERROR: Failed to download $path_in_repo"
         exit 1
