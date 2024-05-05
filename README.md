@@ -14,13 +14,11 @@ This is a repository for Lyricify releases that can run on Wine.
     - [via Spark Store](#via-spark-store)
   - [Maintainer](#maintainer)
 
-
 ## Releasing Methods
 - Github Releases ([Installation Guide](#via-github-releases))
 - Spark Store ([Installation Guide](#via-github-releases))
-- Docker Image (coming soon)
 
-*NOTE: after hours of testing the APT repo cannot be guaranteed to work properly, so the way is abandoned for now.*
+*NOTE: after hours of testing, the APT repo and the Docker image cannot be guaranteed to work properly, so the way is abandoned for now.*
 
 ## Installation
 

@@ -16,8 +16,11 @@ done
 
 APT_GET_INSTALLED=true
 if ! command -v apt-get &>/dev/null; then
-    echo "WARN: apt-get is not present, falling back to dpkg"
-    APT_GET_INSTALLED=false
+    echo "ERROR: apt-get is not present"
+    exit 1
+else
+    echo "INFO: apt-get is present"
+    apt-get update
 fi
 
 # check other dependencies: curl, jq
@@ -44,7 +47,7 @@ ARIA2C_INSTALLED=true
 if ! command -v aria2c &>/dev/null; then
     if [ "$APT_GET_INSTALLED" = "true" ]; then
         echo "INFO: aria2c is not present, attempting to install it using apt-get"
-        apt-get install -y aria2c
+        apt-get install -y aria2
         if [ $? -ne 0 ]; then
             echo "WARN: aria2c is not present, falling back to curl"
             ARIA2C_INSTALLED=false
@@ -111,7 +114,7 @@ function download_file_from_repo() {
     else
         url=https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/$path_in_repo
     fi
-    download_file_from_repo $url "/tmp/${path_in_repo}"
+    download_file_from_url $url $target_path
     if [ $? -ne 0 ]; then
         echo "ERROR: Failed to download $path_in_repo"
         exit 1
@@ -142,8 +145,13 @@ function check_and_install_package() {
         if [ $? -ne 0 ]; then
             echo "ERROR: failed to install $package_name using apt-get. Falling back to dpkg"
             download_file_from_repo "apt-missing-dependencies/${package_name_in_repo}" "/tmp/${package_name_in_repo}"
-            safe_dpkg_install "/tmp/${package_name_in_repo}"
-            rm "/tmp/${package_name_in_repo}"
+            apt-get install -y /tmp/${package_name_in_repo}
+            if [ $? -ne 0 ]; then
+                echo "ERROR: failed to install $package_name using apt-get(local)"
+                exit 1
+            else
+                echo "INFO: $package_name installed successfully using apt-get(local)"
+            fi
         else
             echo "INFO: $package_name installed successfully, using apt-get"
         fi
@@ -164,7 +172,7 @@ version_name=$(parse_json "$latest_release" "name")
 upload_datetime=$(parse_json "$latest_release" "published_at")
 download_url=$(parse_json "$latest_release" "assets[0].browser_download_url")
 
-if [ "$release_id" = "null"]; then
+if [ "$release_id" = "null" ]; then
     echo "ERROR: Failed to fetch latest release information from Github: probably rate-limited"
     echo "INFO: Please try again later (maybe 20-40 seconds)"
     exit 1
