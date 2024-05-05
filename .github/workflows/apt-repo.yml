@@ -15,7 +15,7 @@ permissions:
   id-token: write
 
 env:
-  REPO_NAME: lyricify_on_wine
+  REPO_NAME: lyricify-on-wine
   CODENAME: lowrepo  # LoW repo
   COMPONENTS: main
   ARCHITECTURES: amd64
