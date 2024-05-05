@@ -34,12 +34,12 @@
 #### 自动安装脚本
 只需在终端中执行以下命令：
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/install-deb.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/install-deb.sh > install-deb.sh && sudo bash install-deb.sh
 ```
 
 如果你所在地区无法访问 `raw.githubusercontent.com`，你可以尝试使用 JSDelivr CDN 的镜像：
 ```bash
-curl -fsSL https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/install-deb.sh | bash
+curl -fsSL https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/install-deb.sh > install-deb.sh && sudo bash install-deb.sh
 ```
 
 #### 手动安装

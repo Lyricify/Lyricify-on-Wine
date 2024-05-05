@@ -27,12 +27,12 @@ This is a repository for Lyricify releases that can run on Wine.
 #### Auto-install Script
 Just execute the following command in your terminal:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/install-deb.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/install-deb.sh > install-deb.sh && sudo bash install-deb.sh
 ```
 
 If `raw.githubusercontent.com` is blocked in your region, you can try the other one below, which uses JSDelivr CDN:
 ```bash
-curl -fsSL https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/install-deb.sh | bash
+curl -fsSL https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/install-deb.sh > install-deb.sh && sudo bash install-deb.sh
 ```
 
 #### Manual Install
