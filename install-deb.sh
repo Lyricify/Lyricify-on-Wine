@@ -205,7 +205,7 @@ else
 #!/bin/bash
 /opt/apps/com.wxriw.lyricify4/files/run.sh
 EOF
-        chmod +x /usr/bin/lyricify
+        chmod +x /usr/bin/lyricify-launcher
         echo "INFO: Shortcut installed successfully"
         echo "INFO: To launch Lyricify, run lyricify-launcher"
     fi
