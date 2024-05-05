@@ -1,5 +1,8 @@
 
 # yamllint disable rule:truthy
+
+name: Generate & Deploy APT Repository
+
 on:
   release:
     types:
