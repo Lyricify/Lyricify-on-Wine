@@ -164,6 +164,12 @@ version_name=$(parse_json "$latest_release" "name")
 upload_datetime=$(parse_json "$latest_release" "published_at")
 download_url=$(parse_json "$latest_release" "assets[0].browser_download_url")
 
+if [ "$release_id" = "null"]; then
+    echo "ERROR: Failed to fetch latest release information from Github: probably rate-limited"
+    echo "INFO: Please try again later (maybe 20-40 seconds)"
+    exit 1
+fi
+
 # echo "INFO: Extracted download URL: $download_url"
 echo "INFO: Version information (latest):"
 echo "  Release ID: $release_id"
