@@ -30,6 +30,11 @@ Just execute the following command in your terminal:
 curl -fsSL https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/install-deb.sh | bash
 ```
 
+If `raw.githubusercontent.com` is blocked in your region, you can try the other one below, which uses JSDelivr CDN:
+```bash
+curl -fsSL https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/install-deb.sh | bash
+```
+
 #### Manual Install
 First of all, download the latest release (currently .deb package) from [Github Releases](https://github.com/Lyricify/Lyricify-on-Wine/releases).
 -  If you're using Deepin or UOS(unverified), install the package using `apt` command directly. All dependecies exist in Deepin's Apt repository.

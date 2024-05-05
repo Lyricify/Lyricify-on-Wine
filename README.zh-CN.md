@@ -37,6 +37,11 @@
 curl -fsSL https://raw.githubusercontent.com/Lyricify/Lyricify-on-Wine/master/install-deb.sh | bash
 ```
 
+如果你所在地区无法访问 `raw.githubusercontent.com`，你可以尝试使用 JSDelivr CDN 的镜像：
+```bash
+curl -fsSL https://cdn.jsdelivr.net/gh/Lyricify/Lyricify-on-Wine@master/install-deb.sh | bash
+```
+
 #### 手动安装
 首先，从 [Github Releases](https://github.com/Lyricify/Lyricify-on-Wine/releases) 下载最新的发布版本（目前是 .deb 包）。
 - 如果你使用的是 Deepin 或 UOS（待验证），可以直接使用 `apt` 命令安装该软件包。所有依赖项都存在于 Deepin 的 Apt 仓库中。
