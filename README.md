@@ -80,7 +80,7 @@ $ mv Lyricify/ ~/.deepinwine/
 ### Running
 At this point, you should be able to run Lyricify 4 normally. Here, we assume the initial working directory is `~/.Lyricify`
 ```bash
-$ APPRUN_CMD=~/,Lyricify/Wine-for-Lyricify/bin/wine64 /opt/deepinwine/tools/spark_run_v4.sh "Lyricify" "4.2.28.240502-release-wpack240503.02" "C:/Program Files/Lyricify 4/Lyricify for Spotify.exe"
+$ APPRUN_CMD=~/.Lyricify/Wine-for-Lyricify/bin/wine64 /opt/deepinwine/tools/spark_run_v4.sh "Lyricify" "4.2.28.240502-release-wpack240503.02" "C:/Program Files/Lyricify 4/Lyricify for Spotify.exe"
 ```
 
 ### Writing a `.desktop` file to integrate the application into the application menu
