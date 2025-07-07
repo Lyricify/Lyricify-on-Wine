@@ -83,7 +83,7 @@ $ mv Lyricify/ ~/.deepinwine/
 ### 运行
 至此应该已经能正常地运行 Lyricify 4，这里假设最初的工作目录是 `~/.Lyricify`
 ```bash
-$ APPRUN_CMD=~/,Lyricify/Wine-for-Lyricify/bin/wine64 /opt/deepinwine/tools/spark_run_v4.sh "Lyricify" "4.2.28.240502-release-wpack240503.02" "C:/Program Files/Lyricify 4/Lyricify for Spotify.exe"
+$ APPRUN_CMD=~/.Lyricify/Wine-for-Lyricify/bin/wine64 /opt/deepinwine/tools/spark_run_v4.sh "Lyricify" "4.2.28.240502-release-wpack240503.02" "C:/Program Files/Lyricify 4/Lyricify for Spotify.exe"
 ```
 
 
