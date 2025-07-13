@@ -64,7 +64,7 @@ $ sudo pacman -S spark-dwine-helper dpkg p7zip
 
 - Download the `.deb` package provided by the [Lyricify-on-Wine](https://github.com/Lyricify/Lyricify-on-Wine) repository, unpack it, and you can delete the remaining files as needed
 ```bash
-$ curl -OL https://github.com/Lyricify/Lyricify-on-Wine/releases/download/Lyricify4/com.wxriw.lyricify4_4.2.28.240502-release-wpack240503.02_amd64.deb
+$ curl -OL https://github.com/Lyricify/Lyricify-on-Wine/releases/download/v4.2.28/com.wxriw.lyricify4_4.2.28.240502-release-wpack240503.02_amd64.deb
 $ dpkg -X com.wxriw.lyricify4_4.2.28.240502-release-wpack240503.02_amd64.deb Lyricify
 $ mv Lyricify/opt/apps/com.wxriw.lyricify4/files/files.7z Lyricify/opt/apps/com.wxriw.lyricify4/files/wine_archive.7z .
 $ 7z x wine_archive.7z -o./Wine-for-Lyricify
